@@ -142,6 +142,7 @@ pub struct Code {
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct Storage {
     cache: String,
+    pub directory_slug: bool,
     code: String,
     root: String,
     scripts: Option<String>,

@@ -75,6 +75,7 @@ impl Command for EditCommand {
 
             let question: Question = qr?;
 
+            let _result = std::fs::create_dir(Path::new(&path).parent().unwrap());
             let mut file_code = File::create(&path)?;
             let mut file_tests = File::create(&tests_path)?;
 
