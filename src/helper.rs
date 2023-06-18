@@ -192,10 +192,22 @@ mod file {
     /// Generate test cases path by fid
     pub fn test_cases_path(problem: &Problem) -> Result<String, Error> {
         let conf = crate::cfg::locate()?;
-        let mut path = format!("{}/{}.tests.dat", conf.storage.code()?, conf.code.pick);
+
+        let mut path;
+        if conf.storage.directory_slug {
+            path = format!(
+                "{}/{}/{}.tests.dat",
+                conf.storage.code()?,
+                "${slug}",
+                conf.code.pick
+            );
+        } else {
+            path = format!("{}/{}.tests.dat", conf.storage.code()?, conf.code.pick);
+        }
 
         path = path.replace("${fid}", &problem.fid.to_string());
         path = path.replace("${slug}", &problem.slug.to_string());
+
         Ok(path)
     }
 
@@ -207,12 +219,23 @@ mod file {
             lang = l.ok_or(Error::NoneError)?;
         }
 
-        let mut path = format!(
-            "{}/{}.{}",
-            conf.storage.code()?,
-            conf.code.pick,
-            suffix(&lang)?,
-        );
+        let mut path;
+        if conf.storage.directory_slug {
+            path = format!(
+                "{}/{}/{}.{}",
+                conf.storage.code()?,
+                "${slug}",
+                conf.code.pick,
+                suffix(&lang)?,
+            );
+        } else {
+            path = format!(
+                "{}/{}.{}",
+                conf.storage.code()?,
+                conf.code.pick,
+                suffix(&lang)?,
+            );
+        }
 
         path = path.replace("${fid}", &problem.fid.to_string());
         path = path.replace("${slug}", &problem.slug.to_string());

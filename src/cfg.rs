@@ -159,6 +159,7 @@ pub struct Code {
 pub struct Storage {
     cache: String,
     code: String,
+    pub directory_slug: bool,
     root: String,
     scripts: Option<String>,
 }
